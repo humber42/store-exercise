@@ -1,1 +1,1 @@
-"# store-exercise" 
+# store-exercise

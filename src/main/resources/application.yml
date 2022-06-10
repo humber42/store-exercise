@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: store-exercise
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/SpringBootKeycloak
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/store-excercise
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+
+server:
+  port: 8081
+

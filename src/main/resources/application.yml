@@ -7,12 +7,18 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080/realms/SpringBootKeycloak
   datasource:
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/store-excercise
-    hikari:
-      connection-timeout: 20000
-      maximum-pool-size: 5
+    url: jdbc:h2:mem:mydb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+      path: /h2-ui
 
 server:
   port: 8081

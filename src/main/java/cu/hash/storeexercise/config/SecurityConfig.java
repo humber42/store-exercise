@@ -13,11 +13,15 @@ public class SecurityConfig {
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(
-                        authz-> authz.antMatchers("/api/v1/login").permitAll()
+                        authz-> authz
+                                .antMatchers("/api/v1/login").permitAll()
+                                .antMatchers("/h2-ui/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .csrf().disable()
-                .cors();
+                .cors()
+                .and()
+                .headers().frameOptions().sameOrigin();
 
         return http.build();
     }

@@ -21,6 +21,6 @@ public class Venta {
     private Date fecha;
 
     @JoinColumn(name = "id_cliente")
-    @ManyToOne(optional = false,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(optional = false,cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private Cliente cliente;
 }

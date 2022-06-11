@@ -1,6 +1,6 @@
 package cu.hash.storeexercise.service;
 
-import cu.hash.storeexercise.models.Cliente;
+
 import cu.hash.storeexercise.models.Venta;
 
 import java.sql.Date;
@@ -11,5 +11,5 @@ public interface VentaService {
     List<Venta> getAll();
     Venta getByIdVenta(long id);
     List<Venta> getAllVentaByDate(Date date);
-    List<Venta> getAllVentaByClient(Cliente client);
+    List<Venta> getAllVentaByClientId(long id);
 }

@@ -3,7 +3,6 @@ package cu.hash.storeexercise.service.impl;
 import cu.hash.storeexercise.constants.KeyConstants;
 import cu.hash.storeexercise.exceptions.NotFoundItemException;
 import cu.hash.storeexercise.exceptions.NotValidFieldsException;
-import cu.hash.storeexercise.models.Cliente;
 import cu.hash.storeexercise.models.Venta;
 import cu.hash.storeexercise.repository.VentaRepository;
 import cu.hash.storeexercise.service.VentaService;
@@ -30,11 +29,11 @@ public class VentaServiceImpl implements VentaService {
     }
 
     @Override
-    public List<Venta> getAllVentaByClient(Cliente client) {
-        if(Objects.isNull(client)){
+    public List<Venta> getAllVentaByClientId(long id) {
+        if(id<=0){
             throw new NotValidFieldsException(KeyConstants.NOT_NULL);
         }
-        return repository.getAllByCliente(client);
+        return repository.getAllByCliente_Id(id);
     }
 
     @Override

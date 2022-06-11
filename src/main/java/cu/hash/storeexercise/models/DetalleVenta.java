@@ -14,11 +14,11 @@ public class DetalleVenta {
     private long id;
 
     @JoinColumn(name = "id_venta")
-    @ManyToOne(optional = false,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(optional = false,cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private Venta venta;
 
     @JoinColumn(name = "id_producto")
-    @ManyToOne(optional = false,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(optional = false,cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private Producto producto;
 
 }

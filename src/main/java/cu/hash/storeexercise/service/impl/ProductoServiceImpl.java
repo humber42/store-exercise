@@ -53,11 +53,6 @@ public class ProductoServiceImpl implements ProductoService {
         repository.deleteById(id);
     }
 
-    @Override
-    public void deleteProductByProduct(Producto producto) {
-        getProductById(producto.getId());
-        repository.deleteById(producto.getId());
-    }
 
     @Override
     public Producto updateProducto(Producto producto) {

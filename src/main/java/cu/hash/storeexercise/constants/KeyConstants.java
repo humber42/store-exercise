@@ -6,4 +6,6 @@ public interface KeyConstants {
     String CORRECT_LOGIN = "Logueo exitoso";
 
     String NOT_NULL="This field must be not null";
+
+    String EMPTY_VALUES=" Existen valores requeridos vacios";
 }

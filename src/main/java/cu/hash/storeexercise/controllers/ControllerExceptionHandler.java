@@ -61,17 +61,6 @@ public class ControllerExceptionHandler extends BaseClass {
         return this.creationResponseException(exception,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private ResponseException creationResponseException(RuntimeException exception,HttpStatus status){
-        String codeFailure = UUID.randomUUID().toString();
-        ResponseException responseException = new ResponseException();
-        responseException.setMessage(exception.getMessage());
-        responseException.setCode(codeFailure);
-        responseException.setHttpStatus(status);
-        responseException.setBackendMessage(exception.getMessage());
-        logger.log(Level.ERROR, responseException.getHttpStatus()+" "+responseException.getCode()+" "+responseException.getMessage());
-        return responseException;
-    }
-
     private ResponseException creationResponseException(Exception exception,HttpStatus status){
         String codeFailure = UUID.randomUUID().toString();
         ResponseException responseException = new ResponseException();
@@ -82,5 +71,7 @@ public class ControllerExceptionHandler extends BaseClass {
         logger.log(Level.ERROR, responseException.getHttpStatus()+" "+responseException.getCode()+" "+responseException.getMessage());
         return responseException;
     }
+
+
 
 }

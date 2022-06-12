@@ -6,6 +6,7 @@ target/
 mvnw
 mvnw.cmd
 .log
+.jar
 
 ### STS ###
 .apt_generated

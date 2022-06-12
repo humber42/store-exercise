@@ -2,7 +2,6 @@ package cu.hash.storeexercise.service.impl;
 
 import cu.hash.storeexercise.constants.KeyConstants;
 import cu.hash.storeexercise.exceptions.ItemAlreadyExistException;
-
 import cu.hash.storeexercise.exceptions.NotValidFieldsException;
 import cu.hash.storeexercise.models.Cliente;
 import cu.hash.storeexercise.repository.ClienteRepository;
@@ -17,34 +16,36 @@ public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clienteRepository;
 
-    private boolean existClientByDni(String dni){
+    private boolean existClientByDni(String dni) {
         return clienteRepository.getClienteByDni(dni).isPresent();
     }
 
     @Override
     public Cliente registerClient(Cliente cliente) {
-        if(Objects.nonNull(cliente)){
-            if(Objects.nonNull(cliente.getNombre())){
-                if(Objects.nonNull(cliente.getApellido())){
-                    if(Objects.nonNull(cliente.getDni())){
-                        if(Objects.nonNull(cliente.getEmail())){
-                            if(Objects.nonNull(cliente.getTelefono())){
-                                if (existClientByDni(cliente.getDni())){
-                                    throw new ItemAlreadyExistException("Existe un cliente con el mismo DNI");
-                                }else {
-                                    return clienteRepository.save(cliente);
-                                }
-                            }else throw new NotValidFieldsException(KeyConstants.NOT_NULL+" {Telefono}");
-                        }else throw new NotValidFieldsException(KeyConstants.NOT_NULL+" {Email}");
-                    }else throw new NotValidFieldsException(KeyConstants.NOT_NULL+" {Dni}");
-                }else throw new NotValidFieldsException(KeyConstants.NOT_NULL+" {Apellido}");
-            }else throw new NotValidFieldsException(KeyConstants.NOT_NULL+" {Nombre}");
-        }else throw new NotValidFieldsException(KeyConstants.NOT_NULL+" {Cliente}");
+        try {
+            if (Objects.nonNull(cliente)
+                    || Objects.nonNull(cliente.getNombre())
+                    || Objects.nonNull(cliente.getApellido())
+                    || Objects.nonNull(cliente.getDni())
+                    || Objects.nonNull(cliente.getEmail())
+                    || Objects.nonNull(cliente.getTelefono())
+            ) {
+
+                if (existClientByDni(cliente.getDni())) {
+                    throw new ItemAlreadyExistException("Existe un cliente con el mismo DNI");
+                } else {
+                    return clienteRepository.save(cliente);
+                }
+            } else throw new NotValidFieldsException(KeyConstants.NOT_NULL + KeyConstants.EMPTY_VALUES);
+        }catch (NullPointerException e){
+            throw new NotValidFieldsException(KeyConstants.NOT_NULL + KeyConstants.EMPTY_VALUES);
+        }
+
     }
 
 
     @Autowired
-    public ClienteServiceImpl(ClienteRepository repository){
-        this.clienteRepository=repository;
+    public ClienteServiceImpl(ClienteRepository repository) {
+        this.clienteRepository = repository;
     }
 }

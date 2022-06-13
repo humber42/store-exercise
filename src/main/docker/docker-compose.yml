@@ -3,6 +3,7 @@ version: '2'
 services:
   app:
     image: 'store-exercise:latest'
+    restart: on-failure
     build:
       context: .
     container_name: app
@@ -10,11 +11,14 @@ services:
       - "8081:8081"
     depends_on:
       - db
+      - keycloak
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/store-excercise
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/realms/SpringBootKeycloak
+      - KEYCLOAK_CONFIG_URI=http://keycloak:8080
   db:
     image: 'postgres:latest'
     container_name: db
@@ -22,3 +26,40 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=store-excercise
+    ports:
+      - "5433:5432"
+  keycloak-db:
+    image: 'postgres:latest'
+    container_name: keycloak-db
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+  keycloak:
+    image: 'quay.io/keycloak/keycloak:latest'
+    container_name: keycloak
+    restart: on-failure
+    environment:
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=keycloak-db
+      - DB_PORT=5432
+      - DB_DATABASE=keycloak
+      - DB_USER=keycloak
+      - DB_SCHEMA=public
+      - DB_PASSWORD=password
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=password
+      - KEYCLOAK_FRONTEND_URL=http://localhost:8080/auth
+    ports:
+      - "8080:8080"
+    depends_on:
+      - keycloak-db
+    command: 
+      - start-dev
+    volumes:
+      - ./config:/config
+
+      
+    

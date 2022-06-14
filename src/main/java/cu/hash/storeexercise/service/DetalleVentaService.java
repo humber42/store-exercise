@@ -9,5 +9,6 @@ import reactor.core.publisher.Flux;
 public interface DetalleVentaService {
 
      Flux<DetalleVentaWithoutList> getAll(long idCliente, long idVenta);
+     DetalleVentaWithoutList registerWithoutVenta(long idProducto,long idVenta);
 
 }

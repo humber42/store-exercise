@@ -23,7 +23,62 @@
    1. Usar el servicio de login para obtener el JWT
    2. Copiar el token y luego tocar el botón que aparece antes del primer servicio, **Authorize**.
    3. En el diálogo que aparece ingresar `Bearer `+ *token*, dar clic en el botón Authorize
-   4. Luego usar el swagger a conveniencia
+   4. Luego usar el swagger:
+      1. Para crear un cliente puede usar el payload siguiente:
+         ```json
+         {
+         "apellido": "Perez",
+         "dni": "56071425686",
+         "email": "juan.perez@mail.com",
+         "nombre": "Juan",
+         "telefono": "+5358987523"
+         }
+         ```
+      2. Para crear un producto puede usar el payload siguiente:
+         ```json
+         {
+         "nombre": "Cebolla",
+         "precio": 20.3
+         }
+         ```
+      3. Para crear una venta puede usar el payload siguiente:
+         *(Para el cliente puede pasar el objeto entero o puede enviar solamente el id)*
+      ```json  
+        {
+         "cliente": {
+            "apellido": "Perez",
+            "dni": "56071425686",
+            "email": "juan.perez@mail.com",
+            "id": 1,
+            "nombre": "Juan",
+            "telefono": "+5358987523"
+         },
+         "fecha": "2022-06-14"
+         }
+      ```
+      o tambien
+      ```json
+        {
+         "cliente": {
+           "apellido": "",
+           "dni": "",
+           "email": "",
+           "id": 1,
+           "nombre": "",
+           "telefono": ""
+           },
+        "fecha": "2022-06-14"
+         }
+        ```
+      
+      4. Para registrar un detalle venta puede usar el payload siguiente
+        ```json 
+      {
+         "idProducto": 1,
+         "idVenta": 1
+         }
+      ```
+   
 2. Puede importar desde el *Postman* o *Insomnia* la API desde la dirección:
    - http://localhost:8081/v2/api-docs
 

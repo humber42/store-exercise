@@ -3,6 +3,7 @@ package cu.hash.storeexercise.controllers.venta;
 import cu.hash.storeexercise.constants.WebResourceKeyConstants;
 import cu.hash.storeexercise.models.Venta;
 import cu.hash.storeexercise.service.VentaService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(WebResourceKeyConstants.URL_BASE+WebResourceKeyConstants.URL_VENTA)
+@Api(tags = "Venta service")
 public class VentaController {
 
     private final VentaService service;

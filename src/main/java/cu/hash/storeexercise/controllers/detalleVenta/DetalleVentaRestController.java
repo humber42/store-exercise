@@ -1,9 +1,6 @@
 package cu.hash.storeexercise.controllers.detalleVenta;
 
 import cu.hash.storeexercise.constants.WebResourceKeyConstants;
-import cu.hash.storeexercise.controllers.producto.ProductoResponse;
-import cu.hash.storeexercise.models.DetalleVenta;
-import cu.hash.storeexercise.repository.DetalleVentaRepository;
 import cu.hash.storeexercise.service.DetalleVentaService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,10 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 @RestController
@@ -25,7 +19,6 @@ import reactor.core.publisher.Flux;
 public class DetalleVentaRestController {
 
     private final DetalleVentaService service;
-    private final Mapper mapper;
 
 
     @Operation(summary = "List of detalle venta", description = "Return a list of detalle venta by id cliente or id venta",responses = {
@@ -34,14 +27,25 @@ public class DetalleVentaRestController {
             @ApiResponse(responseCode = "400",description = "Bad request")
     })
     @GetMapping(params = {"idCliente","idVenta"},produces = "application/json")
-    public Flux<DetalleVentaWithoutList> getAllDetalleVenta(@Parameter(description = "Id of the cliente", required = false)@RequestParam("idCliente")long idCliente,@Parameter(description = "Id of the venta", required = false) @RequestParam("idVenta")long idVenta){
+    public Flux<DetalleVentaWithoutList> getAllDetalleVenta(@Parameter(description = "Id of the cliente")@RequestParam("idCliente")long idCliente,@Parameter(description = "Id of the venta") @RequestParam("idVenta")long idVenta){
         return service.getAll(idCliente,idVenta);
+    }
+
+    @Operation(summary = "Register detalle venta", description = "Register a detalle venta on the system and return it",responses = {
+            @ApiResponse(responseCode = "200",description = "Successful Operation",content = @Content(schema = @Schema(implementation = DetalleVentaWithoutList.class))),
+            @ApiResponse(responseCode = "400",description = "El detalle venta ya existe o contenido incorrecto")
+    })
+    @PostMapping(produces = "application/json")
+    public DetalleVentaWithoutList register(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody
+                    (description = "A Detalle Venta to register", required = true, content =
+                    @Content(schema = @Schema(implementation = DetalleVentaRequest.class)))@RequestBody DetalleVentaRequest request){
+        return service.registerWithoutVenta(request.getIdProducto(), request.getIdVenta());
     }
 
     @Autowired
     public DetalleVentaRestController(DetalleVentaService service,Mapper mapper){
         this.service=service;
-        this.mapper=mapper;
     }
 
 }

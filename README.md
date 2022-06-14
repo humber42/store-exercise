@@ -9,7 +9,7 @@
 ### *Pasos para crear el contenedor:*
 1. Abrir el *cmd* en la ruta base del proyecto
 2. Escribir y ejecutar `mvn clean package -DskipTests`
-3. Ejecutar `docker-composer up`
+3. Ejecutar `docker-compose up`
 4. Ir a la dirección http://localhost:8080 y seleccionar *Administrative console*
 5. Ingresar:
    1. user: `admin`

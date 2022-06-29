@@ -41,7 +41,7 @@ public class VentaServiceImpl implements VentaService {
         if(Objects.nonNull(venta)){
             if(Objects.nonNull(venta.getCliente())){
                 if(Objects.nonNull(venta.getFecha())){
-                    return repository.save(venta);
+                    return repository.saveAndFlush(venta);
                 }else throw new NotValidFieldsException(KeyConstants.NOT_NULL+" {Fecha}");
             }else throw new NotValidFieldsException(KeyConstants.NOT_NULL+" {Cliente}");
         }else throw new NotValidFieldsException(KeyConstants.NOT_NULL+ " {Venta}");

@@ -29,7 +29,7 @@ public class DetalleVentaServiceImpl implements DetalleVentaService {
     }
 
     @Override
-    public DetalleVentaWithoutList registerWithoutVenta(long idProducto, long idVenta) {
+    public DetalleVenta registerWithoutVenta(long idProducto, long idVenta) {
 
         if(this.repository.existsByVenta_IdAndProducto_Id(idVenta,idProducto))
             throw new ItemAlreadyExistException("El detalle de venta ya existe");
@@ -43,7 +43,7 @@ public class DetalleVentaServiceImpl implements DetalleVentaService {
         newDetalleVenta.setVenta(venta);
         newDetalleVenta.setProducto(producto);
 
-        return this.mapper.map(this.repository.save(newDetalleVenta), DetalleVentaWithoutList.class);
+        return newDetalleVenta;
 
     }
 

@@ -2,6 +2,7 @@ package cu.hash.storeexercise.service.impl;
 
 import cu.hash.storeexercise.constants.KeyConstants;
 import cu.hash.storeexercise.exceptions.ItemAlreadyExistException;
+import cu.hash.storeexercise.exceptions.NotFoundItemException;
 import cu.hash.storeexercise.exceptions.NotValidFieldsException;
 import cu.hash.storeexercise.models.Cliente;
 import cu.hash.storeexercise.repository.ClienteRepository;
@@ -43,6 +44,10 @@ public class ClienteServiceImpl implements ClienteService {
 
     }
 
+    @Override
+    public Cliente getClient(String dni) {
+        return clienteRepository.getClienteByDni(dni).orElseThrow(()->new NotFoundItemException("Item not found"));
+    }
 
     @Autowired
     public ClienteServiceImpl(ClienteRepository repository) {

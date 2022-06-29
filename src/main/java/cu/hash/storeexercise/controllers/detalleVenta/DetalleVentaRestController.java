@@ -20,6 +20,8 @@ public class DetalleVentaRestController {
 
     private final DetalleVentaService service;
 
+    private final Mapper mapper;
+
 
     @Operation(summary = "List of detalle venta", description = "Return a list of detalle venta by id cliente or id venta",responses = {
             @ApiResponse(responseCode = "200",description = "Successful Operation",content = @Content(schema = @Schema(implementation = DetalleVentaWithoutList.class))),
@@ -40,12 +42,13 @@ public class DetalleVentaRestController {
             @io.swagger.v3.oas.annotations.parameters.RequestBody
                     (description = "A Detalle Venta to register", required = true, content =
                     @Content(schema = @Schema(implementation = DetalleVentaRequest.class)))@RequestBody DetalleVentaRequest request){
-        return service.registerWithoutVenta(request.getIdProducto(), request.getIdVenta());
+        return mapper.map(service.registerWithoutVenta(request.getIdProducto(), request.getIdVenta()),DetalleVentaWithoutList.class);
     }
 
     @Autowired
     public DetalleVentaRestController(DetalleVentaService service,Mapper mapper){
         this.service=service;
+        this.mapper=mapper;
     }
 
 }

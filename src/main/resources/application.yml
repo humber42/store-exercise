@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: store-exercise
   security:
@@ -6,6 +8,15 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/SpringBootKeycloak
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+server:
+  port: 8081
+
+
+---
+spring:
   datasource:
     username: postgres
     password: postgres
@@ -20,9 +31,34 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-server:
-  port: 8081
+  config:
+    activate:
+      on-profile: dev
+logging:
+  level:
+    org:
+      springframework.web: ${LOG_LEVEL_SPRING:info}
+      hibernate: ${LOG_LEVEL_SPRING:info}
+    web: ${LOG_LEVEL_SPRING:info}
+    cu.hash.storeexercise: ${LOG_LEVEL_SPRING:info}
+  config: classpath:log4j2.properties
 
+---
+spring:
+  datasource:
+    url: jdbc:h2:mem:mydb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      path: /h2-ui
+      enabled: true
+  config:
+    activate:
+      on-profile: test

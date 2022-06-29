@@ -63,11 +63,8 @@ public class ControllerExceptionHandler extends BaseClass {
 
     private ResponseException creationResponseException(Exception exception,HttpStatus status){
         String codeFailure = UUID.randomUUID().toString();
-        ResponseException responseException = new ResponseException();
-        responseException.setMessage(exception.getMessage());
-        responseException.setCode(codeFailure);
-        responseException.setHttpStatus(status);
-        responseException.setBackendMessage(exception.getMessage());
+        ResponseException responseException = new ResponseException
+                (status,exception.getMessage(),codeFailure,exception.getMessage());
         logger.log(Level.ERROR, responseException.getHttpStatus()+" "+responseException.getCode()+" "+responseException.getMessage());
         return responseException;
     }

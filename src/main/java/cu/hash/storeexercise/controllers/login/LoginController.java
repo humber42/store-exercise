@@ -40,7 +40,8 @@ public class LoginController extends BaseClass {
                     requests, Object.class);
 
             if(response.getStatusCode().equals(HttpStatus.OK)){
-                logger.log(Level.DEBUG,userLogin.getUsername()+" " + KeyConstants.CORRECT_LOGIN);
+                logger.log(Level.DEBUG,String.format("%s %s",userLogin.getUsername(),KeyConstants.CORRECT_LOGIN));
+
             }
 
             return response;

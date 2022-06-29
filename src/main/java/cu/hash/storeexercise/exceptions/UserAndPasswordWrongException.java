@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class UserAndPasswordWrongException  extends RuntimeException{
 
-    private String username;
+    private final String username;
 
     public UserAndPasswordWrongException(String msg,String username){
         super(msg);

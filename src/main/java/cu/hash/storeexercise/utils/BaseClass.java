@@ -6,4 +6,5 @@ import org.apache.logging.log4j.Logger;
 
 public class BaseClass {
     protected static final Logger logger = LogManager.getLogger(BaseClass.class);
+
 }
